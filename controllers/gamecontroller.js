@@ -6,13 +6,13 @@ router.get('/all', (req, res) => {
         .then(
             function findSuccess(data) {
                 res.status(200).json({
-                    games: games,
+                    games: data,
                     message: "Data fetched."
                 })
             },
 
             function findFail() {
-                res.status(500).json({
+                res.status(404).json({
                     message: "Data not found"
                 })
             }
@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
             },
 
             function findFail(err) {
-                res.status(500).json({
+                res.status(404).json({
                     message: "Data not found."
                 })
             }
@@ -47,7 +47,7 @@ router.post('/create', (req, res) => {
     })
         .then(
             function createSuccess(game) {
-                res.status(200).json({
+                res.status(201).json({
                     game: game,
                     message: "Game created."
                 })
@@ -70,7 +70,7 @@ router.put('/update/:id', (req, res) => {
         {
             where: {
                 id: req.params.id,
-                owner_id: req.user
+                owner_id: req.user.id
             }
         })
         .then(
